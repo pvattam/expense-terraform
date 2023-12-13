@@ -30,4 +30,4 @@ backend = {
   instance_type = "t3.micro"
 }
 
-bastion_cidrs = ["172.31.38.203"]
+bastion_cidrs = ["172.31.38.203/32"]
