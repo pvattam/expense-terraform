@@ -92,7 +92,9 @@ resource "aws_iam_role" "main" {
           "Resource" : [
             "arn:aws:ssm:us-east-1:072976934238:parameter/${var.env}.${var.component}.*",
             "arn:aws:ssm:us-east-1:072976934238:parameter/newrelic.licence_key.*",
-            "arn:aws:ssm:us-east-1:072976934238:parameter/${var.env}.rds.*"
+            "arn:aws:ssm:us-east-1:072976934238:parameter/${var.env}.rds.*",
+            "arn:aws:ssm:us-east-1:072976934238:parameter/grafana.api_key",
+            "arn:aws:ssm:us-east-1:072976934238:parameter/jenkins.*"
           ]
         },
         {
@@ -100,6 +102,21 @@ resource "aws_iam_role" "main" {
           "Effect" : "Allow",
           "Action" : "ssm:DescribeParameters",
           "Resource" : "*"
+        },
+        {
+          "Sid": "VisualEditor0",
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:ListBucket",
+            "s3:PutObject",
+            "s3:DeleteObjectVersion",
+            "s3:DeleteObject"
+          ],
+          "Resource": [
+            "arn:aws:s3:::pv24-prometheus-alert-rules/*",
+            "arn:aws:s3:::pv24-prometheus-alert-rules"
+          ]
         }
       ]
 
