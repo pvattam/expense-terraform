@@ -54,3 +54,16 @@ module "frontend" {
   vpc_id = module.vpc.vpc_id
   bastion_cidrs = var.bastion_cidrs
 }
+
+module "public-alb" {
+  source = "./modules/alb"
+  env              = var.env
+  internal         = var.public_alb["internal"]
+  lb_port          = var.public_alb["lb_port"]
+  sg_cidrs         = ["0.0.0.0/0"]
+  subnets          = module.vpc.public_subnets
+  tags             = var.tags
+  target_group_arn = module.frontend.target_group_arn
+  type             = var.public_alb["type"]
+  vpc_id           = module.vpc.vpc_id
+}

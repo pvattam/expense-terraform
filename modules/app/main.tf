@@ -11,13 +11,22 @@ resource "aws_security_group" "main" {
     cidr_blocks      = var.sg_cidrs
   }
 
-  egress {
-    description = "SSH"
+  ingress {
+    description      = "SSH"
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
     cidr_blocks      = var.bastion_cidrs
   }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
 
   tags = merge(var.tags, {Name =  "${var.env}-${var.component}"})
 }
@@ -44,6 +53,7 @@ resource "aws_autoscaling_group" "main" {
   max_size           = var.instance_count + 5
   min_size           = var.instance_count
   vpc_zone_identifier = var.subnets
+  target_group_arns = [aws_lb_target_group.main.arn]
 
   launch_template {
     id      = aws_launch_template.main.id
@@ -55,6 +65,13 @@ resource "aws_autoscaling_group" "main" {
     propagate_at_launch = true
     value               = "${var.env}-${var.component}"
   }
+}
+
+resource "aws_lb_target_group" "main" {
+  name     = "${var.env}-${var.component}"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
 }
 
 resource "aws_iam_role" "main" {
