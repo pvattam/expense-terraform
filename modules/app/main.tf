@@ -92,7 +92,7 @@ resource "aws_iam_role" "main" {
           ],
           "Resource" : [
             "arn:aws:ssm:us-east-1:072976934238:parameter/${var.env}.${var.component}.*",
-            "arn:aws:ssm:us-east-1:072976934238:parameter/newrelic.licence_key.*",
+            "arn:aws:ssm:us-east-1:072976934238:parameter/newrelic.licence_key",
             "arn:aws:ssm:us-east-1:072976934238:parameter/${var.env}.rds.*",
             "arn:aws:ssm:us-east-1:072976934238:parameter/grafana.api_key",
             "arn:aws:ssm:us-east-1:072976934238:parameter/jenkins.*"
@@ -105,7 +105,7 @@ resource "aws_iam_role" "main" {
           "Resource" : "*"
         },
         {
-          "Sid": "VisualEditor0",
+          "Sid": "S3UploadForPrometheusAlerts",
           "Effect": "Allow",
           "Action": [
             "s3:GetObject",
