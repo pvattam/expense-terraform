@@ -67,3 +67,16 @@ module "public-alb" {
   type             = var.public_alb["type"]
   vpc_id           = module.vpc.vpc_id
 }
+
+module "backend-alb" {
+  source = "./modules/alb"
+  env              = var.env
+  internal         = var.backend-alb["internal"]
+  lb_port          = var.backend-alb["lb_port"]
+  sg_cidrs         = var.web_subnet
+  subnets          = module.vpc.app_subnets
+  tags             = var.tags
+  target_group_arn = module.backend.target_group_arn
+  type             = var.backend-alb["type"]
+  vpc_id           = module.vpc.vpc_id
+}
