@@ -42,3 +42,11 @@ resource "aws_lb_listener" "main" {
   }
 }
 
+resource "aws_route53_record" "main" {
+  name    = "${var.component}-${var.env}"
+  type    = "CNAME"
+  zone_id = var.route53_zone_id
+  ttl     = 30
+  records = [aws_lb.main.dns_name]
+}
+

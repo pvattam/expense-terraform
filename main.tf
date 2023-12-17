@@ -66,6 +66,8 @@ module "public-alb" {
   target_group_arn = module.frontend.target_group_arn
   type             = var.public_alb["type"]
   vpc_id           = module.vpc.vpc_id
+  component        = var.public_alb["component"]
+  route53_zone_id  = var.route53_zone_id
 }
 
 module "backend-alb" {
@@ -79,4 +81,6 @@ module "backend-alb" {
   target_group_arn = module.backend.target_group_arn
   type             = var.backend-alb["type"]
   vpc_id           = module.vpc.vpc_id
+  component        = var.backend-alb["component"]
+  route53_zone_id  = var.route53_zone_id
 }

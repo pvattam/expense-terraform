@@ -42,10 +42,14 @@ public_alb = {
   internal = false
   lb_port = 80
   type = "public"
+  component = "frontend"
 }
 
 backend-alb = {
   internal = true
   lb_port = 80
   type = "backend"
+  component = "backend"
 }
+
+route53_zone_id = "Z017218723D63YD2W9JSZ"
