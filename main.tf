@@ -25,6 +25,7 @@ module "rds" {
   sg_cidrs = var.app_subnet
   tags = var.tags
   vpc_id = module.vpc.vpc_id
+  kms = var.kms
 }
 
 module "backend" {
@@ -34,11 +35,12 @@ module "backend" {
   env = var.env
   instance_count = var.backend["instance_count"]
   instance_type = var.backend["instance_type"]
-  sg_cidrs = var.web_subnet
+  sg_cidrs = var.app_subnet
   subnets = module.vpc.app_subnets
   tags = var.tags
   vpc_id = module.vpc.vpc_id
   bastion_cidrs = var.bastion_cidrs
+  kms = var.kms
 }
 
 module "frontend" {
@@ -53,6 +55,8 @@ module "frontend" {
   tags = var.tags
   vpc_id = module.vpc.vpc_id
   bastion_cidrs = var.bastion_cidrs
+  kms = var.kms
+
 }
 
 module "public-alb" {
