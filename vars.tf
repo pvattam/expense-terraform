@@ -21,3 +21,4 @@ variable "public_alb" {}
 variable "backend-alb" {}
 variable "route53_zone_id" {}
 variable "kms" {}
+variable "certificate_arn" {}

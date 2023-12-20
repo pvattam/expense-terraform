@@ -43,6 +43,8 @@ public_alb = {
   lb_port = 80
   type = "public"
   component = "frontend"
+  enable_https = true
+
 }
 
 backend-alb = {
@@ -50,7 +52,9 @@ backend-alb = {
   lb_port = 80
   type = "backend"
   component = "backend"
+  enable_https = false
 }
 
 route53_zone_id = "Z017218723D63YD2W9JSZ"
 kms = "arn:aws:kms:us-east-1:072976934238:key/079f5721-2a3d-4e97-b0da-900b8fde1369"
+certificate_arn = "arn:aws:acm:us-east-1:072976934238:certificate/ab3e1f5e-0b58-45f5-b14e-37aec2c793c2"
