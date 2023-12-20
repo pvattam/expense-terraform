@@ -43,7 +43,7 @@ public_alb = {
   lb_port = 80
   type = "public"
   component = "frontend"
-#  enable_https = true
+  enable_https = true
 
 }
 
@@ -52,7 +52,7 @@ backend-alb = {
   lb_port = 80
   type = "backend"
   component = "backend"
-#  enable_https = false
+  enable_https = false
 }
 
 route53_zone_id = "Z017218723D63YD2W9JSZ"
