@@ -92,3 +92,61 @@ resource "aws_route53_record" "main" {
   records = [aws_lb.main.dns_name]
 }
 
+resource "aws_wafv2_web_acl" "main" {
+  count = var.enable_https ? 1 : 0
+  name          = "${var.component}-${var.env}"
+  scope         = "REGIONAL"
+  tags          = {}
+  tags_all      = {}
+  token_domains = []
+
+  default_action {
+    allow {}
+  }
+
+  rule {
+    name     = "block_curl_public"
+    priority = 0
+
+    action {
+      block {}
+    }
+
+    statement {
+      byte_match_statement {
+        positional_constraint = "STARTS_WITH"
+        search_string         = "curl"
+
+        field_to_match {
+          single_header {
+            name = "user-agent"
+          }
+        }
+
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "block_curl_public"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${var.component}-${var.env}"
+    sampled_requests_enabled   = true
+  }
+}
+
+resource "aws_wafv2_web_acl_association" "main" {
+  count = var.enable_https ? 1 : 0
+  resource_arn = aws_lb.main.arn
+  web_acl_arn  = aws_wafv2_web_acl.main[0].arn
+}
+
