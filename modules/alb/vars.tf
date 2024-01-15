@@ -11,3 +11,4 @@ variable "component" {}
 variable "route53_zone_id" {}
 variable "enable_https" {}
 variable "certificate_arn" {}
+variable "ingress" {}
