@@ -12,3 +12,6 @@ variable "route53_zone_id" {}
 variable "enable_https" {}
 variable "certificate_arn" {}
 variable "ingress" {}
+variable "dns_name" {
+  default = null
+}

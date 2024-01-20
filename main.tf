@@ -76,6 +76,7 @@ module "public-alb" {
   enable_https     = var.public_alb["enable_https"]
   certificate_arn  = var.certificate_arn
   ingress = var.public_alb["ingress"]
+  dns_name = var.env == 'prod' ? "www" : null
 }
 
 module "backend-alb" {
