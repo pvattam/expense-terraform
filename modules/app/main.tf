@@ -82,13 +82,13 @@ resource "aws_autoscaling_group" "main" {
   tag {
     key                 = "Name"
     propagate_at_launch = true
-    value               = "true"
+    value               = "${var.env}-${var.component}"
   }
 
   tag {
     key                 = "Monitor"
     propagate_at_launch = true
-    value               = "${var.env}-${var.component}"
+    value               = "true"
   }
 }
 
