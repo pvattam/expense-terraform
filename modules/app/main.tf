@@ -19,6 +19,14 @@ resource "aws_security_group" "main" {
     cidr_blocks      = var.bastion_cidrs
   }
 
+  ingress {
+    description      = "PROMETHEUS"
+    from_port        = 9100
+    to_port          = 9100
+    protocol         = "tcp"
+    cidr_blocks      = var.prometheus_cidrs
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -74,8 +82,15 @@ resource "aws_autoscaling_group" "main" {
   tag {
     key                 = "Name"
     propagate_at_launch = true
-    value               = "${var.env}-${var.component}"
+    value               = "true"
   }
+}
+
+tag {
+  key                 = "Monitor"
+  propagate_at_launch = true
+  value               = "${var.env}-${var.component}"
+}
 }
 
 resource "aws_lb_target_group" "main" {

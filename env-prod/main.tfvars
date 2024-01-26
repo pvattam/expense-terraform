@@ -37,6 +37,8 @@ frontend = {
 }
 
 bastion_cidrs = ["172.31.38.203/32"]
+prometheus_cidrs = ["172.31.36.179/32"]
+
 
 public_alb = {
   internal = false
