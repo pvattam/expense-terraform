@@ -36,7 +36,7 @@ frontend = {
   instance_type = "t3.small"
 }
 
-bastion_cidrs = ["172.31.45.197/32"]
+bastion_cidrs = ["172.31.80.170/32"]
 prometheus_cidrs = ["172.31.36.179/32"]
 
 
